@@ -12,6 +12,11 @@ class HouseOwnerController extends Controller
 {
     public function showLoginForm()
     {
+        // Check if user is already authenticated
+        if (Auth::guard('house_owner')->check()) {
+            return redirect()->route('owner.dashboard');
+        }
+        
         return view('owner.auth.loginForm');
     }
 
@@ -28,6 +33,11 @@ class HouseOwnerController extends Controller
 
     public function registerForm()
     {
+        // Check if user is already authenticated
+        if (Auth::guard('house_owner')->check()) {
+            return redirect()->route('owner.dashboard');
+        }
+        
         return view('owner.auth.registerForm');
     }
 

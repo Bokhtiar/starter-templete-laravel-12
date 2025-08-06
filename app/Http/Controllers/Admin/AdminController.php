@@ -19,6 +19,11 @@ class AdminController extends Controller
      */
     public function loginForm()
     {
+        // Check if user is already authenticated
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        
         return view('admin.auth.loginForm');
     }
 
@@ -35,6 +40,11 @@ class AdminController extends Controller
 
     public function registerForm()
     {
+        // Check if user is already authenticated
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        
         return view('admin.auth.registerForm');
     }
 
