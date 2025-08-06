@@ -29,7 +29,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Redirect to appropriate dashboard based on user type
+        $user = Auth::user();
+        
+        // Check if user exists in admin table
+        if (Auth::guard('admin')->check()) {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+        
+        // Check if user exists in house_owner table
+        if (Auth::guard('house_owner')->check()) {
+            return redirect()->intended(route('owner.dashboard'));
+        }
+        
+        // Default user dashboard
+        return redirect()->intended(route('dashboard'));
     }
 
     /**
